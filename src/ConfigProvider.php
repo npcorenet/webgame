@@ -6,6 +6,7 @@ use App\Http\Paths;
 use \Exception;
 use Envms\FluentPDO\Query;
 use Twig\Environment;
+use App\Util\MessageManager;
 
 class ConfigProvider
 {
@@ -14,6 +15,7 @@ class ConfigProvider
     public Query $database;
     public Paths $paths;
     public Environment $twig;
+    public MessageManager $messageManager;
 
     public function add(string $name, mixed $value): void
     {

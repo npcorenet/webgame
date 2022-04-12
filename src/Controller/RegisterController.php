@@ -13,7 +13,7 @@ use DateTime;
 class RegisterController implements ControllerInterface
 {
 
-    public function __construct(private ConfigProvider $configProvider, private MessageManager $messageManager = new MessageManager())
+    public function __construct(private ConfigProvider $configProvider)
     {
     }
 
@@ -27,7 +27,7 @@ class RegisterController implements ControllerInterface
             $this->post();
         }
 
-        $content = array_merge(['messages' => $this->messageManager->getMessageArray()], []);
+        $content = array_merge(['messages' => $this->configProvider->messageManager->getMessageArray()], []);
 
         echo $this->configProvider->twig->render('page/register.html.twig', $content);
 
@@ -52,7 +52,7 @@ class RegisterController implements ControllerInterface
             $model->setPassword($_POST['registerPassword']);
             $model->setRegistered(new DateTime());
 
-            $verify = new RegisterVerification($this->messageManager, $table);
+            $verify = new RegisterVerification($this->configProvider->messageManager, $table);
 
             if(!$verify->verify($model))
             {

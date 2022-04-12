@@ -18,4 +18,11 @@ $router->route('/register', function () use ($configProvider) {
 
 }, 'POST|GET');
 
+$router->route('/login', function () use ($configProvider) {
+
+    $controller = new \App\Controller\LoginController($configProvider);
+    $controller->handle();
+
+}, 'POST|GET');
+
 echo $router->route($configProvider->paths->readAndOutputRequestedUrl());
