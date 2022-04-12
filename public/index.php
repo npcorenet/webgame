@@ -11,12 +11,9 @@ $configProvider->add('config_dir', __DIR__.'/../config');
 
 require_once $configProvider->get('config_dir') . '/database.php';
 
-$pdo = new PDO('mysql:host='.$databaseConfig['database_host'].';dbname='.$databaseConfig['database_name'],
-    $databaseConfig['database_user'], $databaseConfig['database_pass']);
-
-$database = (new \App\Factory\DatabaseFactory())->build($pdo);
-unset($databaseConfig);
-unset($pdo);
+$database = (new \App\Factory\DatabaseFactory())->build(
+    new PDO('mysql:host='.$databaseConfig['database_host'].';dbname='.$databaseConfig['database_name'],
+    $databaseConfig['database_user'], $databaseConfig['database_pass']));
 
 $paths = new \App\Http\Paths();
 
@@ -32,4 +29,4 @@ $configProvider->messageManager = $messageManager;
 
 $configProvider->add('prefix', 'webgame_');
 
-require_once $configProvider->get('base_dir') . '/routes.php';
+require_once $configProvider->get('config_dir') . '/routes.php';
