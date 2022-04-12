@@ -38,7 +38,7 @@ class RegisterVerification
             $this->accountTable->findByUsername($accountModel->getUsername()) !== FALSE
         )
         {
-            $this->messageManager->add('danger', 'Nutzername oder Email sind bereits vergeben');
+            $this->messageManager->add('danger', 'Nutzername oder Email ist bereits vergeben');
         }
 
         return $this->messageManager->countType('danger') === 0;

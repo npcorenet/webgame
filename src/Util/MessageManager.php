@@ -23,9 +23,18 @@ class MessageManager
 
     public function countType(string $type): int
     {
+        $value = 0;
+        foreach($this->messages as $message)
+        {
+            if($message['type'] === $type)
+            {
 
-        return isset($this->messages[$type]) ? count($this->messages[$type]) : 0;
+                $value++;
 
+            }
+        }
+
+        return $value;
     }
 
 }
