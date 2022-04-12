@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+        <link href="{{ app.request.getBaseURL() }}/css/bulma.css" rel="stylesheet"/>
+        <title>{% block title %}{% endblock %} - Webgame</title>
+    {% endblock %}
+</head>
+<body>
+
+    {% include 'element/navigation.html.twig' %}
+
+    <div id="content">{% block content %}{% endblock %}</div>
+
+    <script src="{{ app.request.getBaseURL() }}/js/navigation.js"></script>
+
+</body>
+</html>
