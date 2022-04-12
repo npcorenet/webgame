@@ -2,7 +2,7 @@
 <html>
 <head>
     {% block head %}
-        <link href="{{ app.request.getBaseURL() }}/css/bulma.css" rel="stylesheet"/>
+        <link href="{{ app.request.getBaseURL() }}/css/bootstrap.css" rel="stylesheet"/>
         <title>{% block title %}{% endblock %} - Webgame</title>
     {% endblock %}
 </head>
@@ -10,9 +10,9 @@
 
     {% include 'element/navigation.html.twig' %}
 
-    <div id="content">{% block content %}{% endblock %}</div>
+    {% block content %}{% endblock %}
 
-    <script src="{{ app.request.getBaseURL() }}/js/navigation.js"></script>
+    {% include 'element/footer.html.twig' %}
 
 </body>
 </html>

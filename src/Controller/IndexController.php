@@ -15,17 +15,30 @@ class IndexController implements ControllerInterface
     public function handle()
     {
 
+        $content = [];
+
+        if($this->configProvider->paths->getRequestType() === 'POST')
+        {
+
+            $content = $this->post();
+
+        }
+
         echo $this->configProvider->twig->render('page/home.html.twig');
 
     }
 
     public function get()
     {
-        // TODO: Implement get() method.
+
+        return [];
+
     }
 
-    public function post()
+    public function post(): array
     {
-        // TODO: Implement post() method.
+
+        return [];
+
     }
 }
