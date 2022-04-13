@@ -7,6 +7,7 @@ use App\Table\AccountTable;
 use App\Util\LoginUtil;
 use App\Util\MessageManager;
 use Envms\FluentPDO\Query;
+use phpDocumentor\Reflection\Types\This;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -45,7 +46,7 @@ class Container
 
         $this->paths = new Paths();
 
-        $this->loginUtil = new LoginUtil($this->prefix, $this->twig, new AccountTable($this->database));
+        $this->loginUtil = new LoginUtil($this->get());
 
     }
 
@@ -98,5 +99,16 @@ class Container
     {
         return $this->paths;
     }
+
+    public function getLoginUtil(): LoginUtil
+    {
+        return $this->loginUtil;
+    }
+
+    public function get(): self
+    {
+        return $this;
+    }
+
 
 }

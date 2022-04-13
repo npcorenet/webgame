@@ -2,41 +2,74 @@
 
 namespace App\Util;
 
-use App\Model\AccountModel;
+use App\Container;
 use App\Table\AccountTable;
-use Twig\Environment;
 
 class LoginUtil
 {
 
-    private AccountModel $accountModel;
+    private bool $isLoggedIn;
+    private array $accountData;
 
-    public function __construct(private string $prefix, private Environment $twig, private AccountTable $accountTable)
+    public function __construct(private Container $container)
     {
-        if(isset($_SESSION[$prefix.'loginId']) && $_SESSION[$prefix.'loginId'] > 0)
+        $this->validateLogin();
+    }
+
+    public function validateLogin(): bool
+    {
+
+        $this->setIsLoggedIn(false);
+
+        if(isset($_SESSION[$this->container->getPrefix().'loginId']))
         {
-            $this->accountModel = new AccountModel();
-            $this->accountModel->setId($_SESSION[$this->prefix.'loginId']);
 
-            $data = $this->accountTable->findById($this->accountModel->getId());
+            $loginId = $_SESSION[$this->container->getPrefix().'loginId'];
+            $accountTable = new AccountTable($this->container->getDatabase());
 
-            if($data === FALSE) {
-                session_destroy();
-                return;
+            $accountData = $accountTable->findById($loginId);
+
+            if($loginId !== 0 && $accountData !== FALSE)
+            {
+
+                $this->setIsLoggedIn(true);
+
+                $this->container->getTwig()->addGlobal('coins', $accountData['coins']);
+                $this->container->getTwig()->addGlobal('diamond', $accountData['diamonds']);
+                $this->container->getTwig()->addGlobal('userPermLevel', $accountData['type']);
+                $this->accountData = $accountData;
+
+                return true;
+
             }
-
-            $this->twig->addGlobal('isLoggedIn', true);
-            return;
 
         }
 
-        $this->twig->addGlobal('isLoggedIn', false);
+        return false;
 
     }
 
-    public function getAccount(): AccountModel
+    public function getIsLoggedIn(): bool
     {
-        return $this->accountModel;
+        return $this->isLoggedIn;
+    }
+
+    public function setIsLoggedIn(bool $isLoggedIn): void
+    {
+        $this->container->getTwig()->addGlobal('isLoggedIn', $isLoggedIn);
+        $this->isLoggedIn = $isLoggedIn;
+    }
+
+    public function getAccountData(): array
+    {
+        return $this->accountData;
+    }
+
+    public function getAccountPermissionLevel(): int
+    {
+
+        return $this->accountData['type'];
+
     }
 
 }

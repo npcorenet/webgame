@@ -21,6 +21,12 @@ class IndexController implements ControllerInterface
 
         }
 
+        if($this->container->getLoginUtil()->getIsLoggedIn())
+        {
+            echo $this->container->getTwig()->render('page/gameboard.html.twig');
+            return;
+        }
+
         echo $this->container->getTwig()->render('page/home.html.twig');
 
     }

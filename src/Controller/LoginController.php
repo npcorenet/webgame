@@ -64,9 +64,11 @@ class LoginController implements ControllerInterface
 
             $accountModel->setId($accountData['id']);
 
-            $_SESSION['loginId'] = $accountModel->getId();
+            $_SESSION[$this->container->getPrefix() . 'loginId'] = $accountModel->getId();
 
             $this->container->getMessageManager()->add('success', 'Anmeldung erfolgreich!');
+
+            header("Location: " . $this->container->getPaths()->readAndOutputRequestedPath() . "/");
 
         }
 

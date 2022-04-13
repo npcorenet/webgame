@@ -13,6 +13,12 @@ $router->route('/', function () use ($container) {
 
 $router->route('/register', function () use ($container) {
 
+    if($container->getLoginUtil()->isLoggedIn())
+    {
+        header("Location:".$container->getPaths()->readAndOutputRequestedPath().'/');
+        return;
+    }
+
     $controller = new \App\Controller\RegisterController($container);
     $controller->handle();
 
@@ -20,7 +26,29 @@ $router->route('/register', function () use ($container) {
 
 $router->route('/login', function () use ($container) {
 
+    if($container->getLoginUtil()->getIsLoggedIn())
+    {
+        header("Location:".$container->getPaths()->readAndOutputRequestedPath().'/');
+        return;
+    }
+
     $controller = new \App\Controller\LoginController($container);
+    $controller->handle();
+
+}, 'POST|GET');
+
+$router->route('/logout', function () use ($container) {
+
+    $controller = new \App\Controller\LogoutController($container);
+    $controller->handle();
+
+}, 'POST|GET');
+
+$router->route('/admin/items', function () use ($container) {
+
+    if(!$container->getLoginUtil()->getIsLoggedIn() && !$container->getLoginUtil()->validateLogin() < 3) { header("Location:".$container->getPaths()->readAndOutputRequestedPath().'/login'); return; }
+
+    $controller = new \App\AdminController\ItemController($container);
     $controller->handle();
 
 }, 'POST|GET');
