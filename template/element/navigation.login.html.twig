@@ -30,6 +30,11 @@
             </div>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="{{ app.request.getBaseURL() }}/logout">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
                 <i class="fas fa-th-large"></i>
             </a>
@@ -64,10 +69,10 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar nav-flat flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <a href="{{ app.request.getBaseURL() }}/" class="nav-link">
+                        <i class="nav-icon fas fa-home"></i>
                         <p>
-                            Starter Pages
+                            Start
                         </p>
                     </a>
                 </li>

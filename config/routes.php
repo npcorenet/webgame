@@ -13,7 +13,7 @@ $router->route('/', function () use ($container) {
 
 $router->route('/register', function () use ($container) {
 
-    if($container->getLoginUtil()->isLoggedIn())
+    if($container->getLoginUtil()->getIsLoggedIn())
     {
         header("Location:".$container->getPaths()->readAndOutputRequestedPath().'/');
         return;

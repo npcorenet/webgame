@@ -18,29 +18,59 @@
 
             <div class="col-4"></div>
 
-            <div class="col-4">
-
-                <form method="post">
-                    <div class="mb-3">
-                        <label for="registerEmail" class="form-label">E-Mail Adresse</label>
-                        <input type="email" class="form-control" id="registerEmail" name="registerEmail">
+            <div class="register-box">
+                <div class="card card-outline card-orange">
+                    <div class="card-header text-center">
+                        <a href="{{ app.request.getBaseURL() }}/" class="h1"><b>Web</b>Game</a>
                     </div>
-                    <div class="mb-3">
-                        <label for="registerUsername" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="registerUsername" name="registerUsername">
+                    <div class="card-body">
+                        <p class="login-box-msg">Registriere dich, um ein neues Spiel zu starten!</p>
+
+                        <form action="" method="post">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Spielername" name="registerUsername">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-user"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="email" class="form-control" placeholder="E-Mail" name="registerEmail">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-envelope"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="password" class="form-control" placeholder="Passwort" name="registerPassword">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-lock"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-7"></div>
+                                <div class="col-5">
+                                    <button type="submit" class="btn btn-primary btn-block">Registrieren</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <hr>
+
+                        <small>
+                            Mit der Registrierung stimmst du den Regeln und der Datenschutzerklärung zu
+                        </small>
+
+                        <hr>
+
+                        <a href="{{ app.request.getBaseURL() }}/" class="text-center">Ich habe bereits ein Konto</a>
                     </div>
-                    <div class="mb-3">
-                        <label for="registerPassword" class="form-label">Passwort</label>
-                        <input type="password" class="form-control" id="registerPassword" name="registerPassword">
-                    </div>
-
-                    <hr>
-                    <small class="text-muted">Mit der Registrierung stimmst du den Spielregeln sowie der Datenschutzerklärung zu</small>
-                    <hr>
-
-                    <button type="submit" class="btn btn-primary">Konto erstellen</button>
-                </form>
-
+                </div>
             </div>
 
             <div class="col-4"></div>
