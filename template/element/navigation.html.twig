@@ -1,39 +1,32 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="main-header navbar navbar-expand-md navbar-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">Webgame</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <a href="{{ app.request.getBaseURL() }}/" class="navbar-brand">
+            <img src="{{ app.request.getBaseURL() }}/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <span class="brand-text font-weight-light">Webgame</span>
+        </a>
+
+        <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ app.request.getBaseURL() }}/">Home</a>
+
+        <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+            <ul class="navbar-nav">
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="{{ app.request.getBaseURL() }}/" class="nav-link">Start</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ app.request.getBaseURL() }}/">Ankündigungen</a>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="{{ app.request.getBaseURL() }}/" class="nav-link">Ankündigungen</a>
                 </li>
             </ul>
-
-            {% if login_id > 0 %}
-
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{{ app.request.getBaseURL() }}/"></a>
-                    </li>
-                </ul>
-
-            {% else %}
-
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{{ app.request.getBaseURL() }}/register">Registrieren</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{{ app.request.getBaseURL() }}/login">Anmelden</a>
-                    </li>
-                </ul>
-
-            {% endif %}
         </div>
+
+        <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{{ app.request.getBaseURL() }}/register" class="btn btn-primary text-white nav-link btn-sm mr-3">Registrieren</a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{{ app.request.getBaseURL() }}/login" class="btn btn-primary text-white nav-link btn-sm mr-3">Anmelden</a>
+            </li>
+        </ul>
     </div>
 </nav>

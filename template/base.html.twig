@@ -1,26 +1,49 @@
 <!DOCTYPE html>
-<html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
 <head>
-    {% block head %}
-        <link href="{{ app.request.getBaseURL() }}/css/bootstrap.css" rel="stylesheet"/>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}{% endblock %} - Webgame</title>
-    {% endblock %}
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        <link rel="stylesheet" href="{{ app.request.getBaseURL() }}/plugins/fontawesome-free/css/all.min.css">
+        <link rel="stylesheet" href="{{ app.request.getBaseURL() }}/css/adminlte.min.css">
 </head>
-<body>
+<body class="hold-transition layout-top-nav dark-mode accent-orange">
+<div class="wrapper">
 
-        {% if isLoggedIn %}
+        {% include 'element/navigation.html.twig' %}
 
-                {% include 'element/navigation.login.html.twig' %}
+        <div class="content-wrapper">
+                <div class="content-header">
+                        <div class="container">
+                                <div class="row mb-2">
 
-        {% else %}
+                                </div>
+                        </div>
+                </div>
 
-                {% include 'element/navigation.html.twig' %}
+                <div class="content">
+                        <div class="container">
+                                <div class="row">
 
-        {% endif %}
+                                </div>
+                        </div>
+                </div>
+        </div>
+        <aside class="control-sidebar control-sidebar-dark">
+        </aside>
 
-    {% block content %}{% endblock %}
+        {% include 'element/footer.html.twig' %}
+</div>
 
-    {% include 'element/footer.html.twig' %}
-
+<script src="{{ app.request.getBaseURL() }}/plugins/jquery/jquery.min.js"></script>
+<script src="{{ app.request.getBaseURL() }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="{{ app.request.getBaseURL() }}/js/adminlte.min.js"></script>
+<script src="{{ app.request.getBaseURL() }}/js/demo.js"></script>
 </body>
 </html>

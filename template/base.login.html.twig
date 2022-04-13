@@ -1,42 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    {% block head %}
-        <link href="{{ app.request.getBaseURL() }}/css/bootstrap.css" rel="stylesheet"/>
-        <title>{% block title %}{% endblock %} - Webgame</title>
-    {% endblock %}
-</head>
-<body>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %} - Webgame</title>
 
-{% if isLoggedIn %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="{{ app.request.getBaseURL() }}/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="{{ app.request.getBaseURL() }}/css/adminlte.min.css">
+</head>
+<body class="hold-transition sidebar-mini dark-mode accent-orange">
+<div class="wrapper">
 
     {% include 'element/navigation.login.html.twig' %}
 
-{% else %}
-
-    {% include 'element/navigation.html.twig' %}
-
-{% endif %}
-
-<div class="container-fluid mt-5 mb-5">
-
-    <div class="row">
-
-        <div class="col-md-2">
-            {% include 'element/sidebar.html.twig' %}
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Starter Page</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Starter Page</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="col-md-10">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card card-orange card-outline">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
 
-            {% block content %}{% endblock %}
+                                <p class="card-text">
+                                    Some quick example text to build on the card title and make up the bulk of the card's
+                                    content.
+                                </p>
+                                <a href="#" class="card-link">Card link</a>
+                                <a href="#" class="card-link">Another link</a>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
+            </div>
         </div>
-
     </div>
+
+    <aside class="control-sidebar control-sidebar-dark">
+        <div class="p-3">
+            <h5>Title</h5>
+            <p>Sidebar content</p>
+        </div>
+    </aside>
+
+    {% include 'element/footer.html.twig' %}
 
 </div>
 
-{% include 'element/footer.html.twig' %}
-
+<script src="{{ app.request.getBaseURL() }}/plugins/jquery/jquery.min.js"></script>
+<script src="{{ app.request.getBaseURL() }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="{{ app.request.getBaseURL() }}/js/adminlte.min.js"></script>
 </body>
 </html>
