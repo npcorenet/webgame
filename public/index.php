@@ -3,6 +3,6 @@ session_start();
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-$container = require_once __DIR__ . '/../config/container.php';
+$container = new \App\Container();
 
-require_once $container['config_dir'] . '/routes.php';
+require_once $container->getConfigDir() . '/routes.php';

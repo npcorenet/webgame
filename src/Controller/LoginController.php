@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\ConfigProvider;
+use App\Container;
 use App\Interface\ControllerInterface;
 use App\Model\AccountModel;
 use App\Table\AccountTable;
@@ -11,41 +11,36 @@ use App\Verify\LoginVerification;
 class LoginController implements ControllerInterface
 {
 
-    public function __construct(private ConfigProvider $configProvider)
+    public function __construct(private Container $container)
     {
     }
 
     public function handle()
     {
 
-        if($this->configProvider->paths->getRequestType() === "POST")
-        {
+        if($this->container->getPaths()->getRequestType() === "POST") { $this->post(); }
 
-            $this->post();
-
-        }
-
-        echo $this->configProvider->twig->render('page/login.html.twig', ['messages' => $this->configProvider->messageManager->getMessageArray()]);
+        echo $this->container->getTwig()->render('page/login.html.twig', ['messages' => $this->container->getMessageManager()->getMessageArray()]);
 
     }
 
-    public function get()
+    public function get(): void
     {
     }
 
-    public function post()
+    public function post(): void
     {
 
         if(isset($_POST['loginEmail'], $_POST['loginPassword']))
         {
 
-            $accountTable = new AccountTable($this->configProvider->database);
+            $accountTable = new AccountTable($this->container->getDatabase());
 
             $accountModel = new AccountModel();
             $accountModel->setEmail($_POST['loginEmail']);
             $accountModel->setPassword($_POST['loginPassword']);
 
-            $verify = new LoginVerification($this->configProvider->messageManager);
+            $verify = new LoginVerification($this->container->getMessageManager());
 
             if(!$verify->verify($accountModel))
             {
@@ -56,22 +51,22 @@ class LoginController implements ControllerInterface
 
             if($accountData === FALSE)
             {
-                $this->configProvider->messageManager->add('danger', 'Es wurde kein Konto mit diesen Daten gefunden');
+                $this->container->getMessageManager()->add('danger', 'Es wurde kein Konto mit diesen Daten gefunden');
                 return;
             }
 
             if(!password_verify($accountModel->getPassword(), $accountData['password'])) {
 
-                $this->configProvider->messageManager->add('danger', 'Es wurde kein Konto mit diesen Daten gefunden');
+                $this->container->getMessageManager()->add('danger', 'Es wurde kein Konto mit diesen Daten gefunden');
                 return;
 
             }
 
             $accountModel->setId($accountData['id']);
 
-            $_SESSION[$this->configProvider->get('prefix') . 'loginId'] = $accountModel->getId();
+            $_SESSION['loginId'] = $accountModel->getId();
 
-            $this->configProvider->messageManager->add('success', 'Anmeldung erfolgreich!');
+            $this->container->getMessageManager()->add('success', 'Anmeldung erfolgreich!');
 
         }
 

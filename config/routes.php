@@ -25,4 +25,4 @@ $router->route('/login', function () use ($container) {
 
 }, 'POST|GET');
 
-echo $router->route($container[\App\Http\Paths::class]()->readAndOutputRequestedUrl());
+echo $router->route($container->getPaths()->readAndOutputRequestedUrl());

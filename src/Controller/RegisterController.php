@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\ConfigProvider;
+use App\Container;
 use App\Interface\ControllerInterface;
 use App\Model\AccountModel;
 use App\Table\AccountTable;
@@ -13,7 +14,7 @@ use DateTime;
 class RegisterController implements ControllerInterface
 {
 
-    public function __construct(private ConfigProvider $configProvider)
+    public function __construct(private Container $container)
     {
     }
 
@@ -22,14 +23,12 @@ class RegisterController implements ControllerInterface
 
         $content = [];
 
-        if($this->configProvider->paths->getRequestType() === 'POST')
+        if($this->container->getPaths()->getRequestType() === 'POST')
         {
             $this->post();
         }
 
-        $content = array_merge(['messages' => $this->configProvider->messageManager->getMessageArray()], []);
-
-        echo $this->configProvider->twig->render('page/register.html.twig', $content);
+        echo $this->container->getTwig()->render('page/register.html.twig', ['messages' => $this->container->getMessageManager()->getMessageArray()]);
 
     }
 
@@ -43,7 +42,7 @@ class RegisterController implements ControllerInterface
         if(isset($_POST['registerEmail'], $_POST['registerPassword'], $_POST['registerUsername']))
         {
 
-            $table = new AccountTable($this->configProvider->database);
+            $table = new AccountTable($this->container->getDatabase());
 
             $model = new AccountModel();
             $model->setEmail($_POST['registerEmail']);
@@ -51,7 +50,7 @@ class RegisterController implements ControllerInterface
             $model->setPassword($_POST['registerPassword']);
             $model->setRegistered(new DateTime());
 
-            $verify = new RegisterVerification($this->configProvider->messageManager, $table);
+            $verify = new RegisterVerification($this->container->getMessageManager(), $table);
 
             if(!$verify->verify($model))
             {
@@ -60,11 +59,11 @@ class RegisterController implements ControllerInterface
 
             if($table->insert($model))
             {
-                $this->messageManager->add('success', 'Das Benutzerkonto wurde erfolgreich angelegt!');
+                $this->container->getMessageManager()->add('success', 'Das Benutzerkonto wurde erfolgreich angelegt!');
                 return;
             }
 
-            $this->messageManager->add('danger', 'Ein Fehler ist aufgetreten!');
+            $this->container->getMessageManager()->add('danger', 'Ein Fehler ist aufgetreten!');
         }
 
     }

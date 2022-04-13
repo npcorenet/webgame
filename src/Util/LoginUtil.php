@@ -2,21 +2,21 @@
 
 namespace App\Util;
 
-use App\ConfigProvider;
 use App\Model\AccountModel;
 use App\Table\AccountTable;
+use Twig\Environment;
 
 class LoginUtil
 {
 
     private AccountModel $accountModel;
 
-    public function __construct(private ConfigProvider $configProvider, private AccountTable $accountTable)
+    public function __construct(private string $prefix, private Environment $twig, private AccountTable $accountTable)
     {
-        if(isset($_SESSION[$this->configProvider->get('prefix').'loginId']) && $_SESSION[$this->configProvider->get('prefix').'loginId'] > 0)
+        if(isset($_SESSION[$prefix.'loginId']) && $_SESSION[$prefix.'loginId'] > 0)
         {
             $this->accountModel = new AccountModel();
-            $this->accountModel->setId($_SESSION[$this->configProvider->get('prefix').'loginId']);
+            $this->accountModel->setId($_SESSION[$this->prefix.'loginId']);
 
             $data = $this->accountTable->findById($this->accountModel->getId());
 
@@ -25,12 +25,12 @@ class LoginUtil
                 return;
             }
 
-            $this->configProvider->twig->addGlobal('isLoggedIn', true);
+            $this->twig->addGlobal('isLoggedIn', true);
             return;
 
         }
 
-        $this->configProvider->twig->addGlobal('isLoggedIn', false);
+        $this->twig->addGlobal('isLoggedIn', false);
 
     }
 
