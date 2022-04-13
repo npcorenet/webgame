@@ -35,7 +35,6 @@ class RegisterController implements ControllerInterface
 
     public function get(): void
     {
-
     }
 
     public function post(): void

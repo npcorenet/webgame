@@ -4,25 +4,25 @@ use App\Http\Router;
 
 $router = new Router();
 
-$router->route('/', function () use ($configProvider) {
+$router->route('/', function () use ($container) {
 
-    $controller = new \App\Controller\IndexController($configProvider);
+    $controller = new \App\Controller\IndexController($container);
     $controller->handle();
 
 }, 'POST|GET');
 
-$router->route('/register', function () use ($configProvider) {
+$router->route('/register', function () use ($container) {
 
-    $controller = new \App\Controller\RegisterController($configProvider);
+    $controller = new \App\Controller\RegisterController($container);
     $controller->handle();
 
 }, 'POST|GET');
 
-$router->route('/login', function () use ($configProvider) {
+$router->route('/login', function () use ($container) {
 
-    $controller = new \App\Controller\LoginController($configProvider);
+    $controller = new \App\Controller\LoginController($container);
     $controller->handle();
 
 }, 'POST|GET');
 
-echo $router->route($configProvider->paths->readAndOutputRequestedUrl());
+echo $router->route($container[\App\Http\Paths::class]()->readAndOutputRequestedUrl());

@@ -13,6 +13,9 @@ class AccountModel
     private string $password;
     private DateTime $registered;
     private int $type;
+    private int $coins;
+
+    private int $diamonds;
 
     public function getId(): int
     {
@@ -74,6 +77,24 @@ class AccountModel
         $this->type = $type;
     }
 
+    public function getCoins(): int
+    {
+        return $this->coins;
+    }
 
+    public function setCoins(int $coins): void
+    {
+        $this->coins = $coins;
+    }
+
+    public function getDiamonds(): int
+    {
+        return $this->diamonds;
+    }
+
+    public function setDiamonds(int $diamonds): void
+    {
+        $this->diamonds = $diamonds;
+    }
 
 }

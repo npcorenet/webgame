@@ -4,11 +4,12 @@ namespace App\Controller;
 
 use App\ConfigProvider;
 use App\Interface\ControllerInterface;
+use App\Table\AccountTable;
 
 class IndexController implements ControllerInterface
 {
 
-    public function __construct(private ConfigProvider $configProvider)
+    public function __construct(array $container)
     {
     }
 

@@ -8,7 +8,15 @@
 </head>
 <body>
 
-    {% include 'element/navigation.html.twig' %}
+        {% if isLoggedIn %}
+
+                {% include 'element/navigation.html.twig' %}
+
+        {% else %}
+
+                {% include 'element/navigation.login.html.twig' %}
+
+        {% endif %}
 
     {% block content %}{% endblock %}
 
