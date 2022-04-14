@@ -40,15 +40,20 @@ class InventoryController implements ControllerInterface
 
             $itemList = [];
 
-            foreach ($itemTable->findAllByTypeId($itemType['id']) as $item) {
+            if($itemType['id'] !== 8)
+            {
 
-                $count = $inventoryTable->getCountByIdAndUser($item['id'], $this->container->getLoginUtil()->getLoginId());
+                foreach ($itemTable->findAllByTypeId($itemType['id']) as $item) {
 
-                $itemList[] = array_merge($item, ['count' => $count]);
+                    $count = $inventoryTable->getCountByIdAndUser($item['id'], $this->container->getLoginUtil()->getLoginId());
+
+                    $itemList[] = array_merge($item, ['count' => $count]);
+
+                }
+
+                $content['groups'][] = array_merge($itemType, ['items' => $itemList]);
 
             }
-
-            $content['groups'][] = array_merge($itemType, ['items' => $itemList]);
 
         }
 
