@@ -37,6 +37,8 @@ class LoginUtil
                 $this->container->getTwig()->addGlobal('coins', $accountData['coins']);
                 $this->container->getTwig()->addGlobal('diamond', $accountData['diamonds']);
                 $this->container->getTwig()->addGlobal('userPermLevel', $accountData['type']);
+                $this->container->getTwig()->addGlobal('username', $accountData['username']);
+                $this->container->getTwig()->addGlobal('userId', $accountData['id']);
                 $this->accountData = $accountData;
 
                 return true;

@@ -15,7 +15,6 @@
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
-                <span class="badge badge-warning navbar-badge">15</span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <span class="dropdown-header"><b>Benachrichtigungen</b></span>
@@ -45,29 +44,23 @@
 <aside class="main-sidebar sidebar-dark-orange elevation-4">
     <a href="{{ app.request.getBaseURL() }}/" class="brand-link">
         <img src="{{ app.request.getBaseURL() }}/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">Webgame</span>
     </a>
 
     <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
-            </div>
-        </div>
-
-        <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
+                <a href="#" class="d-block">{{ username }}#{{ userId }}</a>
+                <div class="mt-2">
+                    <span class="text-yellow">Münzen: {{ coins|default('0') }}</span> <br>
+                    <span class="text-lightblue">Diamanten: {{ diamond|default('0') }}</span>
                 </div>
             </div>
         </div>
 
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar nav-flat flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar nav-flat flex-column nav-sidebar layout-fixed" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-header">GAME</li>
                 <li class="nav-item">
                     <a href="{{ app.request.getBaseURL() }}/" class="nav-link">
                         <i class="nav-icon fas fa-home"></i>
@@ -77,14 +70,133 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                    <a href="{{ app.request.getBaseURL() }}/" class="nav-link">
+                        <i class="nav-icon fas fa-boxes"></i>
                         <p>
-                            Simple Link
-                            <span class="right badge badge-danger">New</span>
+                            Lager
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ app.request.getBaseURL() }}/" class="nav-link">
+                        <i class="nav-icon far fa-map"></i>
+                        <p>
+                            Bereiche
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ app.request.getBaseURL() }}/" class="nav-link">
+                        <i class="nav-icon fas fa-industry"></i>
+                        <p>
+                            Gebäude
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-header">MULTIPLAYER</li>
+                <li class="nav-item">
+                    <a href="{{ app.request.getBaseURL() }}/" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Gemeinschaft
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ app.request.getBaseURL() }}/" class="nav-link">
+                        <i class="nav-icon fas fa-clipboard-list"></i>
+                        <p>
+                            Quests
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ app.request.getBaseURL() }}/" class="nav-link">
+                        <i class="nav-icon fas fa-comment-alt"></i>
+                        <p>
+                            Chat
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ app.request.getBaseURL() }}/" class="nav-link">
+                        <i class="nav-icon fas fa-users-cog"></i>
+                        <p>
+                            Einstellungen
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-header">SUPPORT</li>
+                <li class="nav-item">
+                    <a href="{{ app.request.getBaseURL() }}/" class="nav-link">
+                        <i class="nav-icon fas fa-ticket-alt"></i>
+                        <p>
+                            Tickets
+                        </p>
+                    </a>
+                </li>
+
+                {% if userPermLevel < 3 %}
+                    <li class="nav-header">ADMINISTRATOR</li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Übersicht
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ app.request.getBaseURL() }}/admin/items" class="nav-link">
+                            <i class="nav-icon fas fa-boxes"></i>
+                            <p>
+                                Items
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ app.request.getBaseURL() }}/" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                Benutzer
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ app.request.getBaseURL() }}/" class="nav-link">
+                            <i class="nav-icon fas fa-newspaper"></i>
+                            <p>
+                                Ankündigungen
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ app.request.getBaseURL() }}/" class="nav-link">
+                            <i class="nav-icon fa fa-ticket-alt"></i>
+                            <p>
+                                Support Tickets
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ app.request.getBaseURL() }}/" class="nav-link">
+                            <i class="nav-icon fa fa-donate"></i>
+                            <p>
+                                Dropevent
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ app.request.getBaseURL() }}/" class="nav-link">
+                            <i class="nav-icon fa fa-barcode"></i>
+                            <p>
+                                Codes
+                            </p>
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
