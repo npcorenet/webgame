@@ -24,40 +24,9 @@
 
     <div class="container">
 
-        <div class="row">
+        <div class="card">
 
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-8">
-                        <h4>Gruppen</h4>
-                    </div>
-                    <div class="col-4">
-                        <a class="btn btn-sm btn-dark w-100" href="#">Neue Gruppe</a>
-                    </div>
-
-                    <div class="col-12">
-
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Titel</th>
-                                <th scope="col">Aktion</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Spitzhacke</td>
-                                <td><a href="#" class="btn btn-danger btn-sm">Löschen</a></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
+            <div class="card-body">
                 <div class="row">
                     <div class="col-8">
                         <h4>Items</h4>
@@ -71,19 +40,22 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th scope="col">Icon</th>
                                 <th scope="col">#</th>
+                                <th scope="col">Icon</th>
                                 <th scope="col">Titel</th>
-                                <th scope="col">Aktion</th>
+                                <th scope="col">Typ</th>
+                                <th scope="col">Wert</th>
+                                <th scope="col">Im Spiel</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td><img src="https://jf-staeulalia.pt/img/other/35/collection-pickaxe-picture-5.png" class="w-25 h-25"></td>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                            </tr>
+
+                                {% for item in items %}
+
+                                    {% include 'admin/element/itemTable.html.twig' %}
+
+                                {% endfor %}
+
                             </tbody>
                         </table>
                     </div>

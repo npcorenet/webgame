@@ -1,0 +1,33 @@
+<div class="col-md-6">
+    <div class="card card-orange card-outline">
+        <div class="card-header">
+            {{ group.title }}
+        </div>
+        <div class="card-body">
+            <table class="table table-head-fixed text-nowrap">
+                <thead>
+                <tr>
+                    <th>Icon</th>
+                    <th>Item</th>
+                    <th>Statistik</th>
+                    <th>Anzahl</th>
+                    <th>Aktion</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for item in group.items %}
+
+                        <tr>
+                            <td>-</td>
+                            <td>{{ item.title }}</td>
+                            <td>{{ item.statpoint }}</td>
+                            <td>{{ item.count }}</td>
+                            <td><a href="#" class="btn btn-sm btn-danger">Verkaufen</a> </td>
+                        </tr>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

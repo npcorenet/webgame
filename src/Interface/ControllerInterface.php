@@ -2,7 +2,6 @@
 
 namespace App\Interface;
 
-use App\ConfigProvider;
 use App\Container;
 
 interface ControllerInterface

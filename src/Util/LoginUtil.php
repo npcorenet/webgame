@@ -74,4 +74,11 @@ class LoginUtil
 
     }
 
+    public function getLoginId(): int
+    {
+
+        return $_SESSION[$this->container->getPrefix().'loginId'];
+
+    }
+
 }

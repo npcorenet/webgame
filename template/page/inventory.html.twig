@@ -1,0 +1,39 @@
+{% extends "base.login.html.twig" %}
+
+{% block title %}Start{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Inventar</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Game</a></li>
+                        <li class="breadcrumb-item">Inventar</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="row">
+
+            {% for group in groups %}
+
+                {% include 'element/inventoryGroup.html.twig' %}
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+{% endblock %}
