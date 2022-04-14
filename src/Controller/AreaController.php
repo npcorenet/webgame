@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Container;
 use App\Interface\ControllerInterface;
-use App\Table\AreaAccountTable;
+use App\Model\InventoryModel;
 use App\Table\AccountTable;
+use App\Table\AreaAccountTable;
 use App\Table\AreaEarningTable;
 use App\Table\AreaTable;
+use App\Table\InventoryTable;
 
 class AreaController implements ControllerInterface
 {
@@ -21,81 +23,85 @@ class AreaController implements ControllerInterface
     public function handle()
     {
 
+        if($this->container->getPaths()->getRequestType() === 'POST')
+        {
+            $this->post();
+        }
+
         $this->get();
 
-        echo $this->container->getTwig()->render('page/areas.html.twig', $this->content);
+        echo $this->container->getTwig()->render('page/area.html.twig',
+            array_merge(['messages' => $this->container->getMessageManager()->getMessageArray()], $this->content));
 
     }
 
     public function get(): void
     {
 
-        $accountAreaTable = new AreaAccountTable($this->container->getDatabase());
+        $areaAccountTable = new AreaAccountTable($this->container->getDatabase());
         $areaTable = new AreaTable($this->container->getDatabase());
-        $areaEarningTable = new AreaEarningTable($this->container->getDatabase());
-        $now = new \DateTime();
 
-        $output = [];
-        $badgeData = [];
-        $buttonData = [];
+        $areaData = $areaAccountTable->findByUserId($this->container->areaId, $this->container->getLoginUtil()->getLoginId());
 
-        foreach ($accountAreaTable->findAllByUserId($this->container->getLoginUtil()->getLoginId()) as $accountArea)
+        if(count($areaData) === 0) { header("Location: ". $this->container->getPaths()->readAndOutputRequestedPath().'/'); }
+
+        $areaTableData = $areaTable->findById($areaData[0]['areaId']);
+
+        if($this->container->claim !== '')
         {
-
-            $areaData = $areaTable->findById($accountArea['areaId']);
-            $title = $areaData['title'];
-            $description = $areaData['description'];
-
-            $blockedUntil = new \DateTime($accountArea['blockedUntil']);
-
-            $blockedDiff = $blockedUntil->diff($now);
-            $diffText = $blockedDiff->format('%h:%Ih');
-
-            if($blockedDiff->d > 0) {
-                $diffText = $blockedDiff->format('%dd %h:%Ih');
-            }
-
-            if($now >= $blockedUntil)
-            {
-                $badgeData = ['badgeType' => 'success', 'badgeContent' => 'Bereit'];
-                $buttonData = ['buttonText' => 'Arbeit beginnen', 'additionalButtonClass' => ''];
-            }
-
-            if($now < $blockedUntil)
-            {
-                $badgeData = ['badgeType' => 'warning', 'badgeContent' => $diffText];
-                $buttonData = ['buttonText' => 'Abholbar in ' . $diffText, 'additionalClass' => 'disabled'];
-            }
-
-            if($now >= $blockedUntil && count($areaEarningTable->findAllByUserAndAreaId(
-                $this->container->getLoginUtil()->getLoginId(), $accountArea['id'])) > 0)
-            {
-                $badgeData = ['badgeType' => 'info', 'badgeContent' => 'Abholbar'];
-                $buttonData = ['buttonText' => 'Abholen', 'additionalClass' => 'disabled'];
-            }
-
-            $output['areas'][] = array_merge($accountArea, ['title' => $title, 'description' => $description], $badgeData, $buttonData);
-
+            $this->claim();
         }
 
-        foreach ($areaTable->findUnlockableAreasByLevel($this->container->getLoginUtil()->getLevel()) as $area) {
-
-
-            $areaData = $areaTable->findById($area['id']);
-            $title = $areaData['title'];
-            $description = $areaData['description'];
-
-            $badgeData = ['badgeType' => 'danger', 'badgeContent' => 'Nach Freischaltung'];
-            $buttonData = ['buttonText' => 'Freischaltung benötigt'];
-
-            $output['areas'][] = array_merge(['title' => $title, 'description' => $description, 'unlockable' => true], $badgeData, $buttonData);
-
-        }
-
-        $this->content = $output;
+        $this->content = array_merge(['title' => $areaTableData['title']]);
 
     }
 
     public function post(): void
-    {}
+    {
+        // TODO: Implement post() method.
+    }
+
+    public function claim()
+    {
+
+        $areaEarningTable = new AreaEarningTable($this->container->getDatabase());
+        $areaEarningData = $areaEarningTable->findAllByUserAndAreaId($this->container->getLoginUtil()->getLoginId(), $this->container->areaId);
+
+        $accountTable = new AccountTable($this->container->getDatabase());
+
+        $inventoryTable = new InventoryTable($this->container->getDatabase());
+
+        if(count($areaEarningData) > 0)
+        {
+            foreach ($areaEarningData as $item)
+            {
+
+                if($item['itemId'] > 0)
+                {
+
+                    for($i = 0; $i <= $item['amount'] ; $i++) {
+                        $inventoryModel = new InventoryModel();
+                        $inventoryModel->setItemId($item['itemId']);
+                        $inventoryModel->setUserId($item['userId']);
+                        $inventoryTable->insert($inventoryModel);
+                    }
+                }
+
+                if($item['itemId'] === -1)
+                {
+                    $accountTable->setCoins(((int)$accountTable->findById($item['userId'])['coins']) + $item['count'], $item['userId']);
+                }
+
+                $areaEarningTable->removeById($item['id']);
+
+            }
+
+            $this->container->getMessageManager()->add('success', 'Die Items wurden abgeholt!');
+            return;
+        }
+
+        $this->container->getMessageManager()->add('danger', 'Es gibt nichts abzuholen!');
+
+    }
+
 }

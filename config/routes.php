@@ -58,11 +58,26 @@ $router->route('/areas', function () use ($container) {
         return;
     }
 
-    $controller = new \App\Controller\AreaController($container);
+    $controller = new \App\Controller\AreaListController($container);
     $controller->handle();
 
 }, 'POST|GET');
 
+$router->route('/area/(\d+)(/claim)?', function ($areaId, $claim = '') use ($container) {
+
+    if(!$container->getLoginUtil()->getIsLoggedIn())
+    {
+        header("Location:".$container->getPaths()->readAndOutputRequestedPath().'/login');
+        return;
+    }
+
+    $container->areaId = $areaId;
+    $container->claim = $claim;
+
+    $controller = new \App\Controller\AreaController($container);
+    $controller->handle();
+
+}, 'POST|GET');
 
 $router->route('/logout', function () use ($container) {
 

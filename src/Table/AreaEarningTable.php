@@ -17,6 +17,13 @@ class AreaEarningTable extends AbstractTable
 
     }
 
+    public function removeById(int $id): bool
+    {
+
+        return $this->query->delete($this->getTableName())->where(['id' => $id])->execute();
+
+    }
+
     public function findAllByUserAndAreaId(int $userId, int $areaId): array|bool
     {
 

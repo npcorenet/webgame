@@ -12,4 +12,11 @@ class AreaAccountTable extends AbstractTable
 
     }
 
+    public function findByUserId(int $areaId, int $userId): bool|array
+    {
+
+        return $this->query->from($this->getTableName())->where(['areaId' => $areaId, 'userId' => $userId])->fetchAll();
+
+    }
+
 }
