@@ -52,6 +52,7 @@
             <div class="info">
                 <a href="#" class="d-block">{{ username }}#{{ userId }}</a>
                 <div class="mt-2">
+                    <span>Level: {{ level }} ({{ experience }}/100)</span> <br>
                     <span class="text-yellow">Münzen: {{ coins|default('0') }}</span> <br>
                     <span class="text-lightblue">Diamanten: {{ diamond|default('0') }}</span>
                 </div>
@@ -78,7 +79,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ app.request.getBaseURL() }}/" class="nav-link">
+                    <a href="{{ app.request.getBaseURL() }}/areas" class="nav-link">
                         <i class="nav-icon far fa-map"></i>
                         <p>
                             Bereiche

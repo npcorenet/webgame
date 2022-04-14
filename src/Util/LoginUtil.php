@@ -10,6 +10,7 @@ class LoginUtil
 
     private bool $isLoggedIn;
     private array $accountData;
+    private int $level;
 
     public function __construct(private Container $container)
     {
@@ -39,6 +40,8 @@ class LoginUtil
                 $this->container->getTwig()->addGlobal('userPermLevel', $accountData['type']);
                 $this->container->getTwig()->addGlobal('username', $accountData['username']);
                 $this->container->getTwig()->addGlobal('userId', $accountData['id']);
+                $this->container->getTwig()->addGlobal('level', $accountData['level']);
+                $this->container->getTwig()->addGlobal('experience', $accountData['experience']);
                 $this->accountData = $accountData;
 
                 return true;
@@ -79,6 +82,11 @@ class LoginUtil
 
         return $_SESSION[$this->container->getPrefix().'loginId'];
 
+    }
+
+    public function getLevel(): int
+    {
+        return $this->accountData['level'];
     }
 
 }

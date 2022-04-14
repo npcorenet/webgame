@@ -50,6 +50,20 @@ $router->route('/inventory', function () use ($container) {
 
 }, 'POST|GET');
 
+$router->route('/areas', function () use ($container) {
+
+    if(!$container->getLoginUtil()->getIsLoggedIn())
+    {
+        header("Location:".$container->getPaths()->readAndOutputRequestedPath().'/login');
+        return;
+    }
+
+    $controller = new \App\Controller\AreaController($container);
+    $controller->handle();
+
+}, 'POST|GET');
+
+
 $router->route('/logout', function () use ($container) {
 
     $controller = new \App\Controller\LogoutController($container);

@@ -1,0 +1,33 @@
+<div class="col-md-4">
+    <div class="card card-outline card-orange">
+
+        {% if area.unlockable|default %}
+
+            <div class="overlay dark">
+                <h4><a>Entsperren</a></h4>
+            </div>
+
+        {% endif %}
+
+        <div class="card-header">
+            <b>{{ area.title }}</b>
+        </div>
+        <div class="card-body">
+            <p>{{ area.description }}</p>
+            <div>
+                <b>Level: </b> <span class="badge badge-light">{{ level }}</span> <br>
+                <b>Nutzbar in: </b>
+                {% include 'element/badge.html.twig' with area %}
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-4 text-center"><a href="#" class="{{ area.additionalButtonClass }}">
+                        {{ area.buttonText }}
+                    </a></div>
+                <div class="col-4 text-center"><a class="text-info" href="#">Informationen</a></div>
+            </div>
+        </div>
+    </div>
+</div>
