@@ -10,7 +10,6 @@ class LoginUtil
 
     private bool $isLoggedIn;
     private array $accountData;
-    private int $level;
 
     public function __construct(private Container $container)
     {
@@ -87,6 +86,11 @@ class LoginUtil
     public function getLevel(): int
     {
         return $this->accountData['level'];
+    }
+
+    public function getCoins(): int
+    {
+        return $this->accountData['coins'];
     }
 
 }

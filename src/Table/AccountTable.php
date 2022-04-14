@@ -36,4 +36,11 @@ class AccountTable extends AbstractTable
 
     }
 
+    public function setCoins(int $amount, int $userId)
+    {
+
+        $this->query->update($this->getTableName())->where(['id' => $userId])->set(['coins' => $amount])->execute();
+
+    }
+
 }
