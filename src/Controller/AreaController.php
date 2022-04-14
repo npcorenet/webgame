@@ -79,7 +79,7 @@ class AreaController implements ControllerInterface
                 if($item['itemId'] > 0)
                 {
 
-                    for($i = 0; $i <= $item['amount'] ; $i++) {
+                    for($i = 0; $i <= $item['count'] ; $i++) {
                         $inventoryModel = new InventoryModel();
                         $inventoryModel->setItemId($item['itemId']);
                         $inventoryModel->setUserId($item['userId']);
