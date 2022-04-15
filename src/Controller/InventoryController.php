@@ -49,7 +49,9 @@ class InventoryController implements ControllerInterface
 
                     $count = $inventoryService->getItemAmount($this->container->getLoginUtil()->getLoginId(), $item['id']);
 
-                    $itemList[] = array_merge($item, ['count' => $count]);
+                    if($count > 0) {
+                        $itemList[] = array_merge($item, ['count' => $count]);
+                    }
 
                 }
 
