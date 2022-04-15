@@ -1,13 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App;
 
 use App\Http\Paths;
-use App\Table\AccountTable;
 use App\Util\LoginUtil;
 use App\Util\MessageManager;
 use Envms\FluentPDO\Query;
-use phpDocumentor\Reflection\Types\This;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 

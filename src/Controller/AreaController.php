@@ -1,10 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Container;
 use App\Interface\ControllerInterface;
-use App\Model\InventoryModel;
 use App\Service\InventoryService;
 use App\Table\AccountTable;
 use App\Table\AreaAccountTable;
@@ -59,7 +58,6 @@ class AreaController implements ControllerInterface
 
     public function post(): void
     {
-        // TODO: Implement post() method.
     }
 
     public function claim()

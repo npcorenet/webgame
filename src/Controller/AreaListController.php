@@ -1,11 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Container;
 use App\Interface\ControllerInterface;
 use App\Table\AreaAccountTable;
-use App\Table\AccountTable;
 use App\Table\AreaEarningTable;
 use App\Table\AreaTable;
 

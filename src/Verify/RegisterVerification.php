@@ -1,11 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Verify;
 
 use App\Model\AccountModel;
 use App\Table\AccountTable;
 use App\Util\MessageManager;
-use function PHPUnit\Framework\isEmpty;
 
 class RegisterVerification
 {

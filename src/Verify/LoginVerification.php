@@ -1,9 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Verify;
 
 use App\Model\AccountModel;
-use App\Table\AccountTable;
 use App\Util\MessageManager;
 
 class LoginVerification
