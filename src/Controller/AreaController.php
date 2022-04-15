@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Container;
 use App\Interface\ControllerInterface;
 use App\Model\InventoryModel;
+use App\Service\InventoryService;
 use App\Table\AccountTable;
 use App\Table\AreaAccountTable;
 use App\Table\AreaEarningTable;
@@ -66,10 +67,9 @@ class AreaController implements ControllerInterface
 
         $areaEarningTable = new AreaEarningTable($this->container->getDatabase());
         $areaEarningData = $areaEarningTable->findAllByUserAndAreaId($this->container->getLoginUtil()->getLoginId(), $this->container->areaId);
-
         $accountTable = new AccountTable($this->container->getDatabase());
-
         $inventoryTable = new InventoryTable($this->container->getDatabase());
+        $inventoryService = new InventoryService($inventoryTable);
 
         if(count($areaEarningData) > 0)
         {
@@ -78,13 +78,7 @@ class AreaController implements ControllerInterface
 
                 if($item['itemId'] > 0)
                 {
-
-                    for($i = 0; $i <= $item['count'] ; $i++) {
-                        $inventoryModel = new InventoryModel();
-                        $inventoryModel->setItemId($item['itemId']);
-                        $inventoryModel->setUserId($item['userId']);
-                        $inventoryTable->insert($inventoryModel);
-                    }
+                    $inventoryService->addItem($this->container->getLoginUtil()->getLoginId(), $item['itemId'], $item['count']);
                 }
 
                 if($item['itemId'] === -1)

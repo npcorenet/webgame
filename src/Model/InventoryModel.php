@@ -8,6 +8,7 @@ class InventoryModel
     private int $id;
     private int $userId;
     private int $itemId;
+    private int $amount;
 
     public function getId(): int
     {
@@ -37,6 +38,16 @@ class InventoryModel
     public function setItemId(int $itemId): void
     {
         $this->itemId = $itemId;
+    }
+
+    public function getAmount(): int
+    {
+        return $this->amount;
+    }
+
+    public function setAmount(int $amount): void
+    {
+        $this->amount = $amount;
     }
 
 

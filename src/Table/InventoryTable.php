@@ -13,10 +13,24 @@ class InventoryTable extends AbstractTable
         $values =
             [
                 'userId' => $inventoryModel->getUserId(),
-                'itemId' => $inventoryModel->getItemId()
+                'itemId' => $inventoryModel->getItemId(),
+                'amount' => $inventoryModel->getAmount()
             ];
 
         return $this->query->insertInto($this->getTableName())->values($values)->execute();
+
+    }
+
+    public function updateAmount(int $userId, int $itemId, int $newAmount): bool|array
+    {
+
+        $values =
+            [
+                'userId' => $userId,
+                'itemId' => $itemId,
+            ];
+
+        return $this->query->update($this->getTableName())->where($values)->set(['amount' => $newAmount])->execute();
 
     }
 
@@ -26,7 +40,13 @@ class InventoryTable extends AbstractTable
         $values = ['itemId' => $id,
             'userId' => $accountId];
 
-        return $this->query->from($this->getTableName())->select(null)->select('COUNT(*)')->where($values)->fetchColumn();
+        $query = $this->query->from($this->getTableName())->where($values)->fetch();
+        if($query !== FALSE)
+        {
+            return $query['amount'];
+        }
+
+        return -1;
 
     }
 

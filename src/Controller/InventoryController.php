@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Container;
 use App\Interface\ControllerInterface;
+use App\Service\InventoryService;
 use App\Table\InventoryTable;
 use App\Table\ItemTable;
 use App\Table\ItemTypeTable;
@@ -32,6 +33,7 @@ class InventoryController implements ControllerInterface
         $itemTypeTable = new ItemTypeTable($this->container->getDatabase());
         $itemTable = new ItemTable($this->container->getDatabase());
         $inventoryTable = new InventoryTable($this->container->getDatabase());
+        $inventoryService = new InventoryService($inventoryTable);
 
         $content = [];
 
@@ -45,7 +47,7 @@ class InventoryController implements ControllerInterface
 
                 foreach ($itemTable->findAllByTypeId($itemType['id']) as $item) {
 
-                    $count = $inventoryTable->getCountByIdAndUser($item['id'], $this->container->getLoginUtil()->getLoginId());
+                    $count = $inventoryService->getItemAmount($this->container->getLoginUtil()->getLoginId(), $item['id']);
 
                     $itemList[] = array_merge($item, ['count' => $count]);
 
