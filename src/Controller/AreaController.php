@@ -41,7 +41,7 @@ class AreaController implements ControllerInterface
         $areaAccountTable = new AreaAccountTable($this->container->getDatabase());
         $areaTable = new AreaTable($this->container->getDatabase());
 
-        $areaData = $areaAccountTable->findByUserId($this->container->areaId, $this->container->getLoginUtil()->getLoginId());
+        $areaData = $areaAccountTable->findByUserId((int)$this->container->areaId, $this->container->getLoginUtil()->getLoginId());
 
         if(count($areaData) === 0) { header("Location: ". $this->container->getPaths()->readAndOutputRequestedPath().'/'); }
 
@@ -51,6 +51,8 @@ class AreaController implements ControllerInterface
         {
             $this->claim();
         }
+
+
 
         $this->content = array_merge(['title' => $areaTableData['title']]);
 

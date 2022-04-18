@@ -50,6 +50,8 @@ class AreaListController implements ControllerInterface
             $blockedDiff = $blockedUntil->diff($now);
             $diffText = $blockedDiff->format('%h:%Ih');
 
+            $buttonClaim = '';
+
             if($blockedDiff->d > 0) {
                 $diffText = $blockedDiff->format('%dd %h:%Ih');
             }
@@ -71,9 +73,10 @@ class AreaListController implements ControllerInterface
             {
                 $badgeData = ['badgeType' => 'info', 'badgeContent' => 'Abholbar'];
                 $buttonData = ['buttonText' => 'Abholen', 'additionalClass' => 'disabled'];
+                $buttonClaim = 'claim';
             }
 
-            $output['areas'][] = array_merge($accountArea, ['title' => $title, 'description' => $description], $badgeData, $buttonData);
+            $output['areas'][] = array_merge($accountArea, ['title' => $title, 'description' => $description, 'buttonClaim' => $buttonClaim], $badgeData, $buttonData);
 
         }
 
