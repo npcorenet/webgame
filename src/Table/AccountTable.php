@@ -7,7 +7,7 @@ use App\Model\AccountModel;
 class AccountTable extends AbstractTable
 {
 
-    public function insert(AccountModel $accountModel): bool|array
+    public function insert(AccountModel $accountModel): bool
     {
 
         $values =
@@ -18,7 +18,7 @@ class AccountTable extends AbstractTable
                 'registered' => $accountModel->getRegistered()->format('Y-m-d H:i:s')
             ];
 
-        return $this->query->insertInto($this->getTableName())->values($values)->execute();
+      return is_numeric($this->query->insertInto($this->getTableName())->values($values)->execute());
 
     }
 
